@@ -2,7 +2,7 @@ from datetime import datetime
 from flask_app import db, login_manager
 from flask_login import UserMixin
 
-import pyotop
+import pyotp
 
 @login_manager.user_loader
 def load_user(user_id):
