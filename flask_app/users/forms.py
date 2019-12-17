@@ -28,7 +28,6 @@ class RegistrationForm(FlaskForm):
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    token = StringField('Token', validators=[DataRequired(), Length(min=6, max=6)])
     submit = SubmitField('Login')
 
     def validate_username(self, username):
@@ -36,10 +35,6 @@ class LoginForm(FlaskForm):
         if user is None:
             raise ValidationError('That username does not exist in our database.')
 
-    def validate_token(self, token):
-        user = User.query.filter_by(username=self.username.data).first()
-        if user is not None and not user.verify_totp(token.data):
-            raise ValidationError("Invalid Token")
 
 
 class UpdateForm(FlaskForm):
