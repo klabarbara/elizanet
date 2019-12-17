@@ -53,7 +53,7 @@ six==1.12.0
 spacy==2.1.9
 SQLAlchemy==1.2.19
 srsly==0.2.0
-tensorflow==0.12.0
+tensorflow==1.15.0
 thinc==7.0.8
 tinydb==3.12.2
 torch==1.0.0
