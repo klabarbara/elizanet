@@ -17,8 +17,8 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         try:
-            form.validate_user(form.username.data)
-            form.validate_email(form.email.data)
+            form.validate_user(form.username)
+            form.validate_email(form.email)
             hashed = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
 
             user = User(username=form.username.data, email=form.email.data, password=hashed)
