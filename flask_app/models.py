@@ -16,10 +16,28 @@ class User(db.Model, UserMixin):
 
     posts = db.relationship("Post", backref="author", lazy=True)
     comments = db.relationship("Comment", backref="author", lazy=True)
+    otp_secret = db.Column(db.String(16), nullable=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # self.otp_secret = base64.b32encode(os.urandom(10)).decode()
+        self.otp_secret = pyotp.random_base32()
 
     def __repr__(self):
         return "User('%s', '%s')" % (self.username, self.email)
 
+    def get_auth_uri(self):
+        servicer = 'CMSC388J-2FA'
+
+        return ('otpauth://totp/{0}:{1}?secret={2}&issuer={0}'.format(
+            servicer, self.username, self.otp_secret
+        ))
+
+    def verify_totp(self, token):
+        totp_client = pyotp.TOTP(self.otp_secret)
+        return totp_client.verify(token)
+        
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False, unique=True)
