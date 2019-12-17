@@ -56,7 +56,7 @@ srsly==0.2.0
 thinc==7.0.8
 tinydb==3.12.2
 tqdm==4.40.2
-urllib3==1.24.1
+urllib3==1.24.2
 wasabi==0.4.2
 Werkzeug==0.15.5
 WTForms==2.2.1
