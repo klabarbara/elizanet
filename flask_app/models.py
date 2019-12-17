@@ -2,6 +2,7 @@ from datetime import datetime
 from flask_app import db, login_manager
 from flask_login import UserMixin
 
+import pyotop
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -37,7 +38,7 @@ class User(db.Model, UserMixin):
     def verify_totp(self, token):
         totp_client = pyotp.TOTP(self.otp_secret)
         return totp_client.verify(token)
-        
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False, unique=True)
